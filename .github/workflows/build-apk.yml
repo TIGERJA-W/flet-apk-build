@@ -1,8 +1,10 @@
+
 name: Build Flet APK
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -24,7 +26,7 @@ jobs:
         distribution: 'zulu'
         java-version: '17'
 
-    - name: Set up Android SDK
+    - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
     - name: Install Dependencies
@@ -35,3 +37,10 @@ jobs:
     - name: Build APK with Flet
       run: |
         flet build apk --verbose
+
+    - name: Upload Finished APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: my-flet-app
+        path: build/apk/**/*.apk
+     
